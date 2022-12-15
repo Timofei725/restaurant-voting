@@ -1,8 +1,10 @@
-Read.md
-target/
+/target/
 
-### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+log
+out
+*.patch
+Read.md

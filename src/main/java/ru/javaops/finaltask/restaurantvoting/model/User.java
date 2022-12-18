@@ -1,6 +1,5 @@
 package ru.javaops.finaltask.restaurantvoting.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -12,9 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -36,9 +33,6 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @Size(min = 5, max = 100)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
-    @Column(name = "has_vote", nullable = false)
-    private boolean hasVote;
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -48,12 +42,25 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
-    private Vote vote;
 
 
+    public User(User u) {
+        this(u.id, u.name, u.email, u.password, u.roles);
+    }
+
+    public User(Integer id, String name, String email, String password,Role... roles) {
+        super(id, name);
+        this.email=email;
+        this.password=password;
+        this.setRoles(List.of(roles));
+    }
+
+    public User(Integer id, String name, String email, String password, Set<Role> roles) {
+        super(id, name);
+        this.email=email;
+        this.password=password;
+        this.setRoles(roles);
+    }
 
 
     public void setRoles(Collection<Role> roles) {

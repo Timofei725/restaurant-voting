@@ -18,9 +18,9 @@ public class Restaurant extends NamedEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private List<Dish> todayMenu;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
-    private List<Dish> votes;
+    private List<Dish> menu;
+    public Restaurant(Integer id, String name) {
+        super(id, name);
+    }
+
 }

@@ -1,11 +1,11 @@
 package ru.javaops.finaltask.restaurantvoting.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 @Entity
@@ -21,14 +21,8 @@ public class Vote extends BaseEntity{
     @Column(name = "vote_date", nullable = false, columnDefinition = "date default now()")
     @NotNull
     private LocalDate date;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
-    private User user;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
-    private Restaurant restaurant;
+    @Column(name = "user_id")
+    private Integer userId;
+    @Column(name = "restaurant_id")
+    private Integer restaurantId;
 }

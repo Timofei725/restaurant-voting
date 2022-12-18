@@ -2,8 +2,6 @@ package ru.javaops.finaltask.restaurantvoting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,14 +18,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Dish extends NamedEntity{
    @Column(name = "price", nullable = false)
-   private int price;
+   private Integer price;
 
    @Column(name = "date_in_menu", nullable = false, columnDefinition = "date default now()")
    @NotNull
    private LocalDate date;
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "restaurant_id", nullable = false)
-   @OnDelete(action = OnDeleteAction.CASCADE)
+   @JoinColumn(name = "restaurant_id")
    @JsonBackReference
    private Restaurant restaurant;
+   public Dish(Integer id, String name,Integer price,Restaurant restaurant) {
+      super(id, name);
+      this.price=price;
+      this.restaurant=restaurant;
+   }
+
 }

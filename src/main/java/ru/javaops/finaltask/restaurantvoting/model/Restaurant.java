@@ -5,11 +5,14 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "restaurant")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,6 +22,7 @@ public class Restaurant extends NamedEntity{
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
     private List<Dish> menu;
+
     public Restaurant(Integer id, String name) {
         super(id, name);
     }

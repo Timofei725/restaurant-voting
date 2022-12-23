@@ -12,16 +12,24 @@ VALUES ('USER', 1),
 
 
 
-INSERT INTO RESTAURANTS (NAME)
+INSERT INTO RESTAURANT (NAME)
 VALUES ('First_Restaurant'),
-       ('Second_Restaurant');
+       ('Second_Restaurant'),
+       ('Second_Restaurant32');
 
-INSERT INTO DISHES (NAME,PRICE, restaurant_id)
+INSERT INTO DISH (NAME,PRICE, restaurant_id)
 VALUES ('Fried_Fish',150, 1),
        ('Fried_Potatoes',120, 1),
        ('Salad',100, 2),
        ('Ice cream',90, 2);
 
-INSERT INTO VOTES (user_id, restaurant_id)
+INSERT INTO DISH (NAME,DATE_IN_MENU,PRICE, restaurant_id)
+VALUES('Fried_Fishwqdqwd','2019-06-26', 12,3),
+       ('Fried_Potatoesasdsda','2019-06-26',120, 3),
+       ('Saladqwdqdw','2019-06-26',100, 3),
+       ('Ice creamdqwdwq','2019-06-26',90, 3);
+
+
+INSERT INTO VOTE (user_id, restaurant_id)
 VALUES (1,1),
        (2, 2);

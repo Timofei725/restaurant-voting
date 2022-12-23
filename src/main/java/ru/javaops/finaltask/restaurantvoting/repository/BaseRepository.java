@@ -7,16 +7,18 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ru.javaops.finaltask.restaurantvoting.utill.ValidationUtil.checkModification;
 
 
 // https://stackoverflow.com/questions/42781264/multiple-base-repositories-in-spring-data-jpa
 @NoRepositoryBean
-@Transactional
+@Transactional(readOnly = true)
 public interface BaseRepository<T> extends JpaRepository<T, Integer> {
 
     //    https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query.spel-expressions
+    @Transactional
     @Modifying
     @Query("DELETE FROM #{#entityName} u WHERE u.id=:id")
     int delete(Integer id);
@@ -26,13 +28,9 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer> {
     }
 
 
-
-
-    @Transactional(readOnly = true)
     List<T> findAll();
 
-    @Transactional(readOnly = true)
-    T getById(Integer id);
+  Optional<T> findById(Integer id);
 
 
 

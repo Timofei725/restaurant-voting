@@ -2,6 +2,8 @@ package ru.javaops.finaltask.restaurantvoting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,8 +11,9 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "dishes",//https://ru.minecraftfullmod.com/2025-defining-indexes-in-jpa
-        indexes = @Index(name = "dishIndex", columnList = "name,date_in_menu,restaurant_id", unique = true))
+
+@Table(name = "dish",//https://ru.minecraftfullmod.com/2025-defining-indexes-in-jpa
+        indexes = @Index(name = "dishIndex", columnList = "date_in_menu,restaurant_id,name", unique = true))
 //One unique dish for one restaurant per day
 @Getter
 @Setter
@@ -24,6 +27,7 @@ public class Dish extends NamedEntity{
    @NotNull
    private LocalDate date;
    @ManyToOne(fetch = FetchType.LAZY)
+   @OnDelete(action = OnDeleteAction.CASCADE)
    @JoinColumn(name = "restaurant_id")
    @JsonBackReference
    private Restaurant restaurant;

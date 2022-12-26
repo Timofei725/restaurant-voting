@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.javaops.finaltask.restaurantvoting.utill.ValidationUtil.checkModification;
+import static ru.javaops.finaltask.restaurantvoting.util.ValidationUtil.checkModification;
 
 
 // https://stackoverflow.com/questions/42781264/multiple-base-repositories-in-spring-data-jpa

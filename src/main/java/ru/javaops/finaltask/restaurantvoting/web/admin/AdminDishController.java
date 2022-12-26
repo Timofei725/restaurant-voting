@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.javaops.finaltask.restaurantvoting.model.Dish;
 import ru.javaops.finaltask.restaurantvoting.repository.DishRepository;
 import ru.javaops.finaltask.restaurantvoting.service.RestaurantService;
-import ru.javaops.finaltask.restaurantvoting.utill.ValidationUtil;
+import ru.javaops.finaltask.restaurantvoting.util.ValidationUtil;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.javaops.finaltask.restaurantvoting.utill.ValidationUtil.checkNew;
+import static ru.javaops.finaltask.restaurantvoting.util.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)

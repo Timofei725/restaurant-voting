@@ -1,7 +1,7 @@
 INSERT INTO USERS (NAME,EMAIL, PASSWORD)
-VALUES ( 'User_First','user@gmail.com',  'password'),
-       ( 'Admin_First','admin@javaops.ru', 'admin'),
-( 'User_Second', 'user2@gmail.com',  'password2');
+VALUES ( 'User_First','user@gmail.com',  '{noop}password'),
+       ( 'Admin_First','admin@javaops.ru', '{noop}admin'),
+( 'User_Second', 'user2@gmail.com',  '{noop}password2');
 
 INSERT INTO USER_ROLES (ROLE, USER_ID)
 VALUES ('USER', 1),

@@ -3,6 +3,7 @@ package ru.javaops.finaltask.restaurantvoting.web.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.finaltask.restaurantvoting.model.Restaurant;
 import ru.javaops.finaltask.restaurantvoting.service.RestaurantService;
@@ -34,8 +35,9 @@ public class RestaurantVotingController {
         return restaurantService.getRestaurantsWithDateMenu(localDate);
     }
     @PostMapping("/{id}/vote")
-    public String doVote(@PathVariable Integer id) {
-        return voteService.doVote(new AuthUser().id(),id)==true?"Your vote have been done or changed":
+    public String doVote(@PathVariable Integer id,@AuthenticationPrincipal AuthUser authUser) {
+        log.info("user {} doVote for restaurant{}",authUser.getUser().id(),id);
+        return voteService.doVote( authUser.getUser().id(),id)==true?"Your vote have been done or changed":
                 "You have already voted and you can't change your vote after 11:00";
     }
 

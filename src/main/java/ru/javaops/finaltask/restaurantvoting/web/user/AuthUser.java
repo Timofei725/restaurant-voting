@@ -1,4 +1,5 @@
-package ru.javaops.finaltask.restaurantvoting.web;
+package ru.javaops.finaltask.restaurantvoting.web.user;
+
 
 import lombok.Getter;
 import lombok.ToString;

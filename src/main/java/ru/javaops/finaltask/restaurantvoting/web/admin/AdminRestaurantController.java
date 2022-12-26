@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.finaltask.restaurantvoting.model.Restaurant;
 import ru.javaops.finaltask.restaurantvoting.service.RestaurantService;
-import ru.javaops.finaltask.restaurantvoting.utill.ValidationUtil;
+import ru.javaops.finaltask.restaurantvoting.util.ValidationUtil;
 
 import java.time.LocalDate;
 import java.util.List;

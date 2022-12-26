@@ -1,4 +1,4 @@
-package ru.javaops.finaltask.restaurantvoting.utill;
+package ru.javaops.finaltask.restaurantvoting.util;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.core.NestedExceptionUtils;

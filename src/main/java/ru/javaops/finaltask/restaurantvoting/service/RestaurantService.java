@@ -52,7 +52,8 @@ public class RestaurantService {
     }
 
     public Dish setRestaurant(Dish dish,Integer restaurantId) {
-       dish.setRestaurant(restaurantRepository.getReferenceById(restaurantId));
+        //it was gerReferenceById
+       dish.setRestaurant(restaurantRepository.getById(restaurantId));
        return dish;
 
     }

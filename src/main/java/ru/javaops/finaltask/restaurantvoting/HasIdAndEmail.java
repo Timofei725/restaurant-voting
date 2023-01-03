@@ -1,6 +1,5 @@
 package ru.javaops.finaltask.restaurantvoting;
 
-public interface HasIdAndEmail {
+public interface HasIdAndEmail extends HasId {
     String getEmail();
-
 }

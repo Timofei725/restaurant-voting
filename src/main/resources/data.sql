@@ -1,6 +1,6 @@
 INSERT INTO USERS (NAME,EMAIL, PASSWORD)
 VALUES ( 'User_First','user@gmail.com',  '{noop}password'),
-       ( 'Admin_First','admin@javaops.ru', '{noop}admin'),
+       ( 'Admin','admin@gmail.com', '{noop}admin'),
 ( 'User_Second', 'user2@gmail.com',  '{noop}password2');
 
 INSERT INTO USER_ROLES (ROLE, USER_ID)
@@ -15,7 +15,7 @@ VALUES ('USER', 1),
 INSERT INTO RESTAURANT (NAME)
 VALUES ('First_Restaurant'),
        ('Second_Restaurant'),
-       ('Second_Restaurant32');
+       ('Third_Restaurant');
 
 INSERT INTO DISH (NAME,PRICE, restaurant_id)
 VALUES ('Fried_Fish',150, 1),

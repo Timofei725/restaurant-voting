@@ -1,6 +1,7 @@
 package ru.javaops.finaltask.restaurantvoting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -25,6 +26,7 @@ public class Dish extends NamedEntity{
 
    @Column(name = "date_in_menu", nullable = false, columnDefinition = "date default now()")
    @NotNull
+   @JsonIgnore
    private LocalDate date;
    @ManyToOne(fetch = FetchType.LAZY)
    @OnDelete(action = OnDeleteAction.CASCADE)

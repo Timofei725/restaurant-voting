@@ -21,11 +21,11 @@ public class RestaurantService {
 
     public Optional<Restaurant> getRestaurantWithDateMenu(LocalDate date, Integer id) {
         Optional<Restaurant> restaurant=  restaurantRepository.getRestaurantWithMenu(id);
+        if(restaurant.isEmpty()) return restaurant;
         restaurant.get().setMenu(restaurant.get().getMenu().stream().
                 filter(x->x.getDate().isEqual(date)).collect(Collectors.toList()));
         return restaurant;
     }
-
     public List<Restaurant> getRestaurantsWithDateMenu(LocalDate date) {
         List<Restaurant> restaurants=  restaurantRepository.getRestaurantsWithMenu();
         restaurants.stream().forEach(r->r.setMenu(r.getMenu().stream().
@@ -34,7 +34,7 @@ public class RestaurantService {
     }
 
     public void delete(Integer id) {
-        restaurantRepository.deleteById(id);
+        restaurantRepository.deleteExisted(id);
     }
 
     public List<Restaurant> getAll() {

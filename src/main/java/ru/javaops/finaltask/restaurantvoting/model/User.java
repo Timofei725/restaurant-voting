@@ -10,7 +10,10 @@ import ru.javaops.finaltask.restaurantvoting.HasIdAndEmail;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -20,8 +23,9 @@ import java.util.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
-public class User extends NamedEntity implements HasIdAndEmail {
-
+public class User extends NamedEntity implements HasIdAndEmail, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -33,6 +37,10 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @Size(min = 5, max = 100)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date registered = new Date();
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

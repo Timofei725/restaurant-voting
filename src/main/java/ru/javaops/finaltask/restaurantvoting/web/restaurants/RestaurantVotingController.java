@@ -1,7 +1,9 @@
-package ru.javaops.finaltask.restaurantvoting.web.user;
+package ru.javaops.finaltask.restaurantvoting.web.restaurants;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = RestaurantVotingController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
+@CacheConfig(cacheNames = "restaurants")
 public class RestaurantVotingController {
 
     static final String REST_URL = "/api/restaurants";
@@ -29,6 +32,7 @@ public class RestaurantVotingController {
     }
 
     @GetMapping
+    @Cacheable
     public List<Restaurant> getAll() {
         log.info("getALl");
         LocalDate localDate=LocalDate.now();

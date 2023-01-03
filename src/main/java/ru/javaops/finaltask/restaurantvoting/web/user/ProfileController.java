@@ -13,13 +13,13 @@ import ru.javaops.finaltask.restaurantvoting.web.AuthUser;
 
 import javax.validation.Valid;
 
-import static ru.javaops.finaltask.restaurantvoting.util.ValidationUtil.assureIdConsistent;
-import static ru.javaops.finaltask.restaurantvoting.util.ValidationUtil.checkNew;
+import static ru.javaops.finaltask.restaurantvoting.util.valodation.ValidationUtil.assureIdConsistent;
+import static ru.javaops.finaltask.restaurantvoting.util.valodation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-public class ProfileController {
+public class ProfileController extends AbstractUserController {
     static final String REST_URL = "/api/profile";
     private final UserRepository userRepository;
 @Autowired
@@ -30,29 +30,29 @@ public class ProfileController {
 
     @GetMapping
     public User get(@AuthenticationPrincipal AuthUser authUser) {
-        log.info("get authorized user {}",authUser.getUser());
         return authUser.getUser();
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal AuthUser authUser) {
-        log.info("delete authorized user {}",authUser.getUser());
         userRepository.deleteExisted(authUser.id());
     }
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@Valid @RequestBody User user) {
+    public User register(@Valid @RequestBody  User user) {
         log.info("register {}", user);
         checkNew(user);
-      return userRepository.save(user);
+      return prepareAndSave(user).orElseThrow();
      }
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     public void update(@RequestBody @Valid User user, @AuthenticationPrincipal AuthUser authUser) {
+        log.info("update user {}",user);
         assureIdConsistent(user, authUser.id());
-        userRepository.update(authUser.id(),user.getName(),user.getEmail(),user.getPassword());
+
+        prepareAndSave(user).orElseThrow();
     }
 
 }

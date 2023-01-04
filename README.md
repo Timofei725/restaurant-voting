@@ -16,5 +16,6 @@ User_First:  user@gmail.ru / password
 Admin: admin@gmail.com / admin
 User_Second:  user@gmail.ru / password2
 
+User_First and Admin have already voted today, but User_Second is able to vote 
 ```
 

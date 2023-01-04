@@ -25,7 +25,7 @@ class RestaurantVotingControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = FIRST_USER_MAIL)
     void changeVote() throws Exception {
-        MvcResult result =   perform(MockMvcRequestBuilders.post(REST_URL + FIRST_RESTAURANT_ID+"/vote"))
+        MvcResult result =   perform(MockMvcRequestBuilders.post(REST_URL + FIRST_RESTAURANT_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -39,7 +39,7 @@ class RestaurantVotingControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = SECOND_USER_MAIL)
     void doVote() throws Exception {
-        MvcResult result =   perform(MockMvcRequestBuilders.post(REST_URL + FIRST_RESTAURANT_ID+"/vote"))
+        MvcResult result =   perform(MockMvcRequestBuilders.post(REST_URL + FIRST_RESTAURANT_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -51,7 +51,7 @@ class RestaurantVotingControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = SECOND_USER_MAIL)
     void voteForWrongRestaurantId() throws Exception {
-       perform(MockMvcRequestBuilders.post(REST_URL + NOT_FOUND + "/vote"))
+       perform(MockMvcRequestBuilders.post(REST_URL + NOT_FOUND ))
                 .andExpect(status().isBadRequest())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));

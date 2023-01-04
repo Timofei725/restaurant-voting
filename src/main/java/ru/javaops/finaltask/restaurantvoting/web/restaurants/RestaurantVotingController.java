@@ -46,7 +46,7 @@ public class RestaurantVotingController {
         return restaurantService.getRestaurantsWithDateMenu(localDate);
     }
 
-    @PostMapping("/{id}/vote")
+    @PostMapping("/{id}")
     public String doVote(@PathVariable int id,@AuthenticationPrincipal AuthUser authUser) {
         log.info("user {} is trying to vote for restaurant {}",authUser.getUser().id(),id);
         ValidationUtil.checkRestaurantId(restaurantService.getById(id), id);

@@ -49,7 +49,7 @@ public class AdminDishController {
         log.info("getALl dishes for restaurant {}",restaurantId);
         return dishesRepository.getDishesByRestaurantId(restaurantId);
     }
-    @GetMapping("/date")
+    @GetMapping("/filter")
     public List<Dish> getDishesByDate(@RequestParam(value="for-date") String date,@PathVariable int restaurantId) {
         log.info("get restaurant id - {} menu for date: {}",restaurantId, date);
         LocalDate localDate=LocalDate.parse(date);

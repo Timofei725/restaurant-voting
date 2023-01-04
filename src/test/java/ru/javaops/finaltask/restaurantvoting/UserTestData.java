@@ -4,7 +4,7 @@ import ru.javaops.finaltask.restaurantvoting.model.Role;
 import ru.javaops.finaltask.restaurantvoting.model.User;
 import ru.javaops.finaltask.restaurantvoting.util.JsonUtil;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class UserTestData {
 
@@ -28,7 +28,7 @@ public class UserTestData {
 
     public static User getUpdated() {
         User user=new User(FIRST_USER_ID, "UpdatedName", FIRST_USER_MAIL, "newPass", Role.USER);
-        user.setRegistered(new Date());
+        user.setRegistered(LocalDateTime.now());
         return user;
     }
 

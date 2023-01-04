@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 @Transactional(readOnly = true)
 public interface VoteRepository extends BaseRepository<Vote> {
-    Optional<Vote> findByDateAndUserId(LocalDate date, Integer userId);
+    Optional<Vote> findByDateAndUserId(LocalDate date, int userId);
     @Transactional()
       @Modifying
       @Query("UPDATE Vote v SET v.restaurantId=?1 where  v.date=?2 AND v.userId=?3" )

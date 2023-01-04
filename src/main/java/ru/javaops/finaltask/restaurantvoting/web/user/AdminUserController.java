@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.finaltask.restaurantvoting.model.User;
 import ru.javaops.finaltask.restaurantvoting.util.UserUtil;
@@ -31,9 +32,9 @@ public class AdminUserController extends AbstractUserController {
 
 
     @GetMapping("/{id}")
-    public  ResponseEntity<User> get(@PathVariable Integer id) {
+    public ResponseEntity<User> get(@PathVariable int id) {
 
-            return ResponseEntity.of(super.get(id));
+            return super.get(id);
 
     }
 
@@ -46,13 +47,13 @@ public class AdminUserController extends AbstractUserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable int id) {
         super.delete(id);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid User user, @PathVariable Integer id) {
+    public void update(@RequestBody @Valid User user, @PathVariable int id) {
         log.info("update user {}, id {}",user,id);
         assureIdConsistent(user, id);
 
@@ -65,5 +66,12 @@ public class AdminUserController extends AbstractUserController {
         return super.repository.getByEmail(email).orElse(null);
     }
 
-
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    public void enable(@PathVariable int id, @RequestParam boolean enabled) {
+        log.info(enabled ? "enable {}" : "disable {}", id);
+        User user = repository.getById(id);
+        user.setEnabled(enabled);
+    }
 }

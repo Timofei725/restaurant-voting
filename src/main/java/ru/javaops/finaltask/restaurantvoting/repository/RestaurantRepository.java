@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface RestaurantRepository extends BaseRepository<Restaurant>{
     @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Optional<Restaurant> getRestaurantWithMenu(Integer id);
+    Optional<Restaurant> getRestaurantWithMenu(int id);
 
     @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r")
@@ -22,7 +22,7 @@ public interface RestaurantRepository extends BaseRepository<Restaurant>{
     @Transactional
     @Modifying
     @Query("UPDATE Restaurant r set r.name=?2 where r.id=?1")
-    void update(Integer id, String newName);
+    void update(int id, String newName);
 
 }
 

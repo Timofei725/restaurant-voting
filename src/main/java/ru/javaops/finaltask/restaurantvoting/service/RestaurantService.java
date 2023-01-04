@@ -13,13 +13,15 @@ import java.util.stream.Collectors;
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private  int restaurantCount;
+
 
 
     public RestaurantService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public Optional<Restaurant> getRestaurantWithDateMenu(LocalDate date, Integer id) {
+    public Optional<Restaurant> getRestaurantWithDateMenu(LocalDate date, int id) {
         Optional<Restaurant> restaurant=  restaurantRepository.getRestaurantWithMenu(id);
         if(restaurant.isEmpty()) return restaurant;
         restaurant.get().setMenu(restaurant.get().getMenu().stream().
@@ -30,10 +32,11 @@ public class RestaurantService {
         List<Restaurant> restaurants=  restaurantRepository.getRestaurantsWithMenu();
         restaurants.stream().forEach(r->r.setMenu(r.getMenu().stream().
                 filter(d->d.getDate().isEqual(date)).collect(Collectors.toList())));
+        restaurantCount=restaurants.size();
         return restaurants;
     }
 
-    public void delete(Integer id) {
+    public void delete(int id) {
         restaurantRepository.deleteExisted(id);
     }
 
@@ -47,14 +50,17 @@ public class RestaurantService {
 
 
 
-    public void update(Restaurant restaurant,Integer id) {
+    public void update(Restaurant restaurant,int id) {
         restaurantRepository.update(id,restaurant.getName());
     }
 
-    public Dish setRestaurant(Dish dish,Integer restaurantId) {
-        //it was gerReferenceById
+    public  void setRestaurant(Dish dish,int restaurantId) {
        dish.setRestaurant(restaurantRepository.getById(restaurantId));
-       return dish;
 
     }
+    public Optional<Restaurant> getById(int id){
+        return restaurantRepository.findById(id);
+    }
+
+
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.finaltask.restaurantvoting.model.User;
 import ru.javaops.finaltask.restaurantvoting.repository.UserRepository;
@@ -64,8 +65,22 @@ class ProfileControllerTest  extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newUser)))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isUnprocessableEntity());
     }
+    @Test
+    void register() throws Exception {
+            User newUser = getNew();
+            ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonWithPassword(newUser, "newPass")))
+                    .andExpect(status().is2xxSuccessful());
+
+            User created = USER_MATCHER.readFromJson(action);
+            int newId = created.id();
+            newUser.setId(newId);
+            USER_MATCHER.assertMatch(created, newUser);
+            USER_MATCHER.assertMatch(userRepository.getById(newId), newUser);
+        }
 
     @Test
     @WithUserDetails(value = FIRST_USER_MAIL)
@@ -75,7 +90,7 @@ class ProfileControllerTest  extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -85,7 +100,7 @@ class ProfileControllerTest  extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isUnprocessableEntity());
     }
 }
 

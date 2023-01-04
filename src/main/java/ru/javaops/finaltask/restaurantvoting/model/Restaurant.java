@@ -1,6 +1,7 @@
 package ru.javaops.finaltask.restaurantvoting.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,6 +22,7 @@ public class Restaurant extends NamedEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private List<Dish> menu;
 
     public Restaurant(Integer id, String name) {

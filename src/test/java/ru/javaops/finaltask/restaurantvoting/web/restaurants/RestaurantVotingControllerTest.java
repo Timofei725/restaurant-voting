@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.finaltask.restaurantvoting.RestaurantTestData.FIRST_RESTAURANT_ID;
+import static ru.javaops.finaltask.restaurantvoting.RestaurantTestData.NOT_FOUND;
 import static ru.javaops.finaltask.restaurantvoting.UserTestData.FIRST_USER_MAIL;
 import static ru.javaops.finaltask.restaurantvoting.UserTestData.SECOND_USER_MAIL;
 
@@ -45,6 +46,15 @@ class RestaurantVotingControllerTest extends AbstractControllerTest {
                 .andReturn();
         String resultString = result.getResponse().getContentAsString();
             Assertions.assertEquals(resultString,"Your vote have been done or changed");
+
+    }
+    @Test
+    @WithUserDetails(value = SECOND_USER_MAIL)
+    void voteForWrongRestaurantId() throws Exception {
+       perform(MockMvcRequestBuilders.post(REST_URL + NOT_FOUND + "/vote"))
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 
     }
 }

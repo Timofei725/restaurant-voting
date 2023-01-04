@@ -15,9 +15,9 @@ public interface DishRepository extends BaseRepository<Dish>{
     @Transactional
     @Modifying
     @Query("UPDATE Dish d set d.name=?2,d.date=?3,d.price=?4 ,d.restaurant.id=?5 where d.id=?1")
-    void update(Integer id,String newName, LocalDate newDate,Integer price,Integer restaurantId);
-    List<Dish> getDishesByRestaurantIdAndAndDate(Integer restaurantId, LocalDate date);
+    void update(int id,String newName, LocalDate newDate,int price,int restaurantId);
+    List<Dish> getDishesByRestaurantIdAndAndDate(int restaurantId, LocalDate date);
 
-    Optional<Dish> getByRestaurantIdAndId(Integer restaurantId, Integer dishId);
-    List<Dish> getDishesByRestaurantId(Integer restaurantId);
+    Optional<Dish> getByRestaurantIdAndId(int restaurantId, int dishId);
+    List<Dish> getDishesByRestaurantId(int restaurantId);
 }

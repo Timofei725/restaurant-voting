@@ -5,6 +5,10 @@ import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.javaops.finaltask.restaurantvoting.HasId;
 import ru.javaops.finaltask.restaurantvoting.error.IllegalRequestDataException;
+import ru.javaops.finaltask.restaurantvoting.error.NoExistentRestaurantException;
+import ru.javaops.finaltask.restaurantvoting.model.Restaurant;
+
+import java.util.Optional;
 
 
 @UtilityClass
@@ -36,5 +40,12 @@ public class ValidationUtil {
     public static Throwable getRootCause(@NonNull Throwable t) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(t);
         return rootCause != null ? rootCause : t;
+    }
+
+
+    public static void checkRestaurantId(Optional<Restaurant> restaurant,Integer id) {
+        if (restaurant.isEmpty()) {
+            throw new NoExistentRestaurantException(String.format("Restaurant with id = %s doesn't exist",id));
+        }
     }
 }

@@ -11,6 +11,7 @@ import ru.javaops.finaltask.restaurantvoting.repository.DishRepository;
 import ru.javaops.finaltask.restaurantvoting.service.RestaurantService;
 import ru.javaops.finaltask.restaurantvoting.util.valodation.ValidationUtil;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,24 +33,24 @@ public class AdminDishController {
 
 
     @GetMapping("/{dishId}")
-    public Dish get(@PathVariable Integer restaurantId,@PathVariable Integer dishId) {
+    public Dish get(@PathVariable int restaurantId,@PathVariable int dishId) {
         log.info("get dish {} for restaurant {}", dishId, restaurantId);
         return dishesRepository.getByRestaurantIdAndId(restaurantId,dishId).orElseThrow();
     }
     @DeleteMapping("/{dishId}")
     @CacheEvict(value = "restaurants", allEntries = true)
-    public void delete(@PathVariable Integer dishId, @PathVariable String restaurantId) {
+    public void delete(@PathVariable int dishId, @PathVariable String restaurantId) {
         log.info("delete dish {} from restaurant {}", dishId,restaurantId);
         dishesRepository.deleteExisted(dishId);
     }
 
     @GetMapping()
-    public List<Dish> getAll(@PathVariable Integer restaurantId) {
+    public List<Dish> getAll(@PathVariable int restaurantId) {
         log.info("getALl dishes for restaurant {}",restaurantId);
         return dishesRepository.getDishesByRestaurantId(restaurantId);
     }
     @GetMapping("/date")
-    public List<Dish> getDishesByDate(@RequestParam(value="forDate") String date,@PathVariable Integer restaurantId) {
+    public List<Dish> getDishesByDate(@RequestParam(value="for-date") String date,@PathVariable int restaurantId) {
         log.info("get restaurant id - {} menu for date: {}",restaurantId, date);
         LocalDate localDate=LocalDate.parse(date);
         return dishesRepository.getDishesByRestaurantIdAndAndDate(restaurantId,localDate);
@@ -58,19 +59,19 @@ public class AdminDishController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(value = "restaurants", allEntries = true)
-    public Dish create(@RequestBody Dish dish, @PathVariable Integer restaurantId) {
-        checkNew(dish);
-        dish=restaurantService.setRestaurant(dish,restaurantId);
+    public Dish create(@RequestBody @Valid Dish dish, @PathVariable int restaurantId) {
         log.info("create {} for restaurant {}", dish, restaurantId);
+        checkNew(dish);
+        restaurantService.setRestaurant(dish,restaurantId);
         return dishesRepository.save(dish);
     }
     @PutMapping(value = "/{dishId}",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "restaurants", allEntries = true)
-    public void update(@RequestBody Dish dish, @PathVariable Integer dishId, @PathVariable Integer restaurantId) {
+    public void update(@RequestBody @Valid Dish dish, @PathVariable int dishId, @PathVariable int restaurantId) {
         log.info("update {} with id={}", dish, dishId);
         ValidationUtil.assureIdConsistent(dish,restaurantId);
-        dishesRepository.update(dishId,dish.getName(),dish.getDate(),dish.getPrice(),restaurantId);
+        dishesRepository.save(dish);
     }
 }
 

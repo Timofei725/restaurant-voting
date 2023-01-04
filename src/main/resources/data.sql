@@ -24,10 +24,10 @@ VALUES ('Fried_Fish',150, 1),
        ('Ice cream',90, 2);
 
 INSERT INTO DISH (NAME,DATE_IN_MENU,PRICE, restaurant_id)
-VALUES('Fried_Fishwqdqwd','2019-06-26', 12,3),
-       ('Fried_Potatoesasdsda','2019-06-26',120, 3),
-       ('Saladqwdqdw','2019-06-26',100, 3),
-       ('Ice creamdqwdwq','2019-06-26',90, 3);
+VALUES('Garlic_Bread','2019-06-26', 85,3),
+       ('Nachos','2019-06-26',120, 3),
+       ('Spaghetti','2019-06-26',140, 3),
+       ('Rice','2019-06-21',90, 3);
 
 
 INSERT INTO VOTE (user_id, restaurant_id)

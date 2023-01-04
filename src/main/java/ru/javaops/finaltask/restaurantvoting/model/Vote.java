@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 @Entity
 @Table(name = "vote",//https://ru.minecraftfullmod.com/2025-defining-indexes-in-jpa
-        indexes = @Index(name = "voteIndex", columnList = "vote_date,restaurant_id,user_id", unique = true))
+        indexes = @Index(name = "voteIndex", columnList = "restaurant_id,vote_date,user_id", unique = true))
 //Only one vote per day to person
 @Getter
 @Setter

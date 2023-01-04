@@ -2,6 +2,9 @@ package ru.javaops.finaltask.restaurantvoting.web.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import ru.javaops.finaltask.restaurantvoting.model.User;
 import ru.javaops.finaltask.restaurantvoting.repository.UserRepository;
 import ru.javaops.finaltask.restaurantvoting.util.UserUtil;
@@ -14,10 +17,16 @@ public abstract class AbstractUserController {
     @Autowired
     protected UserRepository repository;
 
+    @Autowired
+    private UniqueMailValidator emailValidator;
 
-    public Optional<User> get(int id) {
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(emailValidator);
+    }
+    public ResponseEntity<User> get(int id) {
         log.info("get {}", id);
-        return  repository.findById(id);
+        return  ResponseEntity.of(repository.findById(id));
     }
 
     public void delete(int id) {

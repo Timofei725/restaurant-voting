@@ -28,7 +28,7 @@ public class AdminRestaurantController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurant> get(@PathVariable Integer id) {
+    public ResponseEntity<Restaurant> get(@PathVariable int id) {
         log.info("get {}",id);
         return ResponseEntity.of(restaurantService.getRestaurantWithDateMenu(LocalDate.now(),id));
     }
@@ -56,7 +56,7 @@ public class AdminRestaurantController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(value = "restaurants", allEntries = true)
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable Integer id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update restaurant {}",id);
         ValidationUtil.assureIdConsistent(restaurant,id);
          restaurantService.update(restaurant,id);

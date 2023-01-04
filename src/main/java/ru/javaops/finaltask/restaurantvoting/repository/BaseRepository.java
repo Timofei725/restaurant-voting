@@ -21,9 +21,9 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM #{#entityName} u WHERE u.id=:id")
-    int delete(Integer id);
+    int delete(int id);
 
-    default void deleteExisted(Integer id) {
+    default void deleteExisted(int id) {
         checkModification(delete(id), id);
     }
 
@@ -31,7 +31,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer> {
     List<T> findAll();
 
 
-    Optional<T> findById(Integer id);
+    Optional<T> findById(int id);
 
 
 

@@ -59,7 +59,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void getDishesByDate() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + THIRD_RESTAURANT_ID
-                + "/dishes/" + "/date?for-date=2019-06-26"))
+                + "/dishes/" + "/filter?for-date=2019-06-26"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

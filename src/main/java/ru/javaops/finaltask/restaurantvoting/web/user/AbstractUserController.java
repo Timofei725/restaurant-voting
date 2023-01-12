@@ -24,9 +24,10 @@ public abstract class AbstractUserController {
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(emailValidator);
     }
+
     public ResponseEntity<User> get(int id) {
         log.info("get {}", id);
-        return  ResponseEntity.of(repository.findById(id));
+        return ResponseEntity.of(repository.findById(id));
     }
 
     public void delete(int id) {

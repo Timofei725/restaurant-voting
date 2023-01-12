@@ -1,6 +1,5 @@
 package ru.javaops.finaltask.restaurantvoting.config;
 
-
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
@@ -24,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
                 version = "1.0",
                 description = "graduation application",
                 contact = @Contact(name = "Kiselev Timofei", email = "timofei725@yandex.ru")
+
         ),
         security = @SecurityRequirement(name = "basicAuth")
 )
@@ -37,3 +37,5 @@ public class OpenApiConfig {
                 .build();
     }
 }
+
+

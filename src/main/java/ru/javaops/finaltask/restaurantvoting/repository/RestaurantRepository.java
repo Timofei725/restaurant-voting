@@ -1,23 +1,23 @@
 package ru.javaops.finaltask.restaurantvoting.repository;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javaops.finaltask.restaurantvoting.model.Restaurant;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface RestaurantRepository extends BaseRepository<Restaurant>{
-    @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Optional<Restaurant> getRestaurantWithMenu(int id);
+public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
-    @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r")
-    List<Restaurant> getRestaurantsWithMenu();
+
+    @Query("SELECT DISTINCT r from Restaurant r JOIN FETCH r.menu mi WHERE mi.date=:date ORDER BY r.name ASC")
+    List<Restaurant> getRestaurantsWithDateMenu(LocalDate date);
+
+    @Query("SELECT r from Restaurant r JOIN FETCH r.menu mi WHERE r.id=:id AND mi.date=:date")
+    Optional<Restaurant> getRestaurantWithDateMenu(LocalDate date, int id);
 
     @Transactional
     @Modifying

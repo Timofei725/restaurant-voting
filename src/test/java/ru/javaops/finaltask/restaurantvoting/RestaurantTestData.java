@@ -18,7 +18,8 @@ public class RestaurantTestData {
 
         return new Restaurant(FIRST_RESTAURANT_ID, "FirstUpdatedRestaurant");
     }
+
     public static Restaurant getNew() {
-        return new Restaurant( null,"newRestaurant");
+        return new Restaurant(null, "newRestaurant");
     }
 }

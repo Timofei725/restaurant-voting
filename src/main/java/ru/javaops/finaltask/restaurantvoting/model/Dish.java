@@ -19,31 +19,34 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Dish extends NamedEntity{
-   @Column(name = "price", nullable = false)
-   private Integer price;
+public class Dish extends NamedEntity {
+    @Column(name = "price", nullable = false)
+    private Integer price;
 
-   @Column(name = "date_in_menu", nullable = false, columnDefinition = "date default now()")
-   private LocalDate date;
-   @ManyToOne(fetch = FetchType.LAZY)
-   @OnDelete(action = OnDeleteAction.CASCADE)
-   @JoinColumn(name = "restaurant_id")
-   @JsonBackReference
-   @Schema(accessMode = Schema.AccessMode.READ_ONLY)
-   private Restaurant restaurant;
-   public Dish(Integer id, String name,Integer price,LocalDate date,Restaurant restaurant) {
-      super(id, name);
-      this.price=price;
-      this.date=date;
-      this.restaurant=restaurant;
-   }
-   public Dish(Integer id, String name,Integer price,Restaurant restaurant) {
-      super(id, name);
-      this.price=price;
-      this.restaurant=restaurant;
-   }
-   public Dish(Dish d) {
-      this(d.id, d.name, d.price, d.date, d.restaurant);
-   }
+    @Column(name = "date_in_menu", nullable = false, columnDefinition = "date default now()")
+    private LocalDate date;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private Restaurant restaurant;
+
+    public Dish(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
+        super(id, name);
+        this.price = price;
+        this.date = date;
+        this.restaurant = restaurant;
+    }
+
+    public Dish(Integer id, String name, Integer price, Restaurant restaurant) {
+        super(id, name);
+        this.price = price;
+        this.restaurant = restaurant;
+    }
+
+    public Dish(Dish d) {
+        this(d.id, d.name, d.price, d.date, d.restaurant);
+    }
 
 }

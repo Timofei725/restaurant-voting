@@ -21,20 +21,22 @@ import static ru.javaops.finaltask.restaurantvoting.RestaurantTestData.*;
 import static ru.javaops.finaltask.restaurantvoting.UserTestData.ADMIN_MAIL;
 import static ru.javaops.finaltask.restaurantvoting.UserTestData.FIRST_USER_MAIL;
 
-class AdminRestaurantControllerTest  extends AbstractControllerTest {
+class AdminRestaurantControllerTest extends AbstractControllerTest {
 
-        private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
+    private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
 
-        @Autowired
-        private RestaurantRepository restaurantRepository;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(firstRestaurant, secondRestaurant,thirdRestaurant));
+                .andExpect(RESTAURANT_MATCHER.contentJson(firstRestaurant, secondRestaurant, thirdRestaurant));
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void get() throws Exception {
@@ -45,12 +47,14 @@ class AdminRestaurantControllerTest  extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(firstRestaurant));
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
-                .andExpect( status().is4xxClientError());
+                .andExpect(status().is4xxClientError());
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
@@ -59,6 +63,7 @@ class AdminRestaurantControllerTest  extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
         Assertions.assertFalse(restaurantRepository.findById(FIRST_RESTAURANT_ID).isPresent());
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void deleteNotFound() throws Exception {
@@ -66,12 +71,14 @@ class AdminRestaurantControllerTest  extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
+
     @Test
     @WithUserDetails(value = FIRST_USER_MAIL)
     void getForbidden() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isForbidden());
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
@@ -83,8 +90,9 @@ class AdminRestaurantControllerTest  extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(FIRST_RESTAURANT_ID),RestaurantTestData. getUpdated());
+        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(FIRST_RESTAURANT_ID), RestaurantTestData.getUpdated());
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void create() throws Exception {
@@ -100,16 +108,18 @@ class AdminRestaurantControllerTest  extends AbstractControllerTest {
         RESTAURANT_MATCHER.assertMatch(createdRestaurant, newRestaurant);
         RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(newId), newRestaurant);
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createInvalid() throws Exception {
-        Restaurant invalid = new Restaurant( null, "s");
+        Restaurant invalid = new Restaurant(null, "s");
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void updateHtmlUnsafe() throws Exception {
@@ -121,4 +131,4 @@ class AdminRestaurantControllerTest  extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-    }
+}

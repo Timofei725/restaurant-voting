@@ -8,15 +8,16 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
 @Entity
 @Table(name = "vote",//https://ru.minecraftfullmod.com/2025-defining-indexes-in-jpa
-        indexes = @Index(name = "voteIndex", columnList = "restaurant_id,vote_date,user_id", unique = true))
+        indexes = @Index(name = "voteIndex", columnList = "vote_date,user_id", unique = true))
 //Only one vote per day to person
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Vote extends BaseEntity{
+public class Vote extends BaseEntity {
 
     @Column(name = "vote_date", nullable = false, columnDefinition = "date default now()")
     @NotNull

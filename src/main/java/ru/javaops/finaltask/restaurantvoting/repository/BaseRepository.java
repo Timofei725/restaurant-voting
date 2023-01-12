@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.javaops.finaltask.restaurantvoting.util.valodation.ValidationUtil.checkModification;
+import static ru.javaops.finaltask.restaurantvoting.util.validation.ValidationUtil.checkModification;
 
 
 // https://stackoverflow.com/questions/42781264/multiple-base-repositories-in-spring-data-jpa
@@ -32,8 +32,6 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer> {
 
 
     Optional<T> findById(int id);
-
-
 
 
 }

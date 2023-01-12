@@ -1,4 +1,4 @@
-package ru.javaops.finaltask.restaurantvoting.util.valodation;
+package ru.javaops.finaltask.restaurantvoting.util.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

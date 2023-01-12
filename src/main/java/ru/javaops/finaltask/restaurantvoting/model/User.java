@@ -44,13 +44,11 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime registered= LocalDateTime.now();
+    private LocalDateTime registered = LocalDateTime.now();
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled = true;
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
@@ -62,17 +60,17 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
         this(u.id, u.name, u.email, u.password, u.roles);
     }
 
-    public User(Integer id, String name, String email, String password,Role... roles) {
+    public User(Integer id, String name, String email, String password, Role... roles) {
         super(id, name);
-        this.email=email;
-        this.password=password;
+        this.email = email;
+        this.password = password;
         this.setRoles(List.of(roles));
     }
 
     public User(Integer id, String name, String email, String password, Set<Role> roles) {
         super(id, name);
-        this.email=email;
-        this.password=password;
+        this.email = email;
+        this.password = password;
         this.setRoles(roles);
     }
 
@@ -80,7 +78,6 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
-
 
 
 }

@@ -1,4 +1,4 @@
-package ru.javaops.finaltask.restaurantvoting.util.valodation;
+package ru.javaops.finaltask.restaurantvoting.util.validation;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;

@@ -18,7 +18,7 @@ import static ru.javaops.finaltask.restaurantvoting.UserTestData.*;
 import static ru.javaops.finaltask.restaurantvoting.web.user.ProfileController.REST_URL;
 
 
-class ProfileControllerTest  extends AbstractControllerTest {
+class ProfileControllerTest extends AbstractControllerTest {
     @Autowired
     private UserRepository userRepository;
 
@@ -67,20 +67,21 @@ class ProfileControllerTest  extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
+
     @Test
     void register() throws Exception {
-            User newUser = getNew();
-            ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jsonWithPassword(newUser, "newPass")))
-                    .andExpect(status().is2xxSuccessful());
+        User newUser = getNew();
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonWithPassword(newUser, "newPass")))
+                .andExpect(status().is2xxSuccessful());
 
-            User created = USER_MATCHER.readFromJson(action);
-            int newId = created.id();
-            newUser.setId(newId);
-            USER_MATCHER.assertMatch(created, newUser);
-            USER_MATCHER.assertMatch(userRepository.getById(newId), newUser);
-        }
+        User created = USER_MATCHER.readFromJson(action);
+        int newId = created.id();
+        newUser.setId(newId);
+        USER_MATCHER.assertMatch(created, newUser);
+        USER_MATCHER.assertMatch(userRepository.getById(newId), newUser);
+    }
 
     @Test
     @WithUserDetails(value = FIRST_USER_MAIL)

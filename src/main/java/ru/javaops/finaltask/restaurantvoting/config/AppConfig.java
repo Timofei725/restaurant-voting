@@ -20,13 +20,13 @@ import java.sql.SQLException;
 
 public class AppConfig {
 
-
     @Bean(initMethod = "start", destroyMethod = "stop")
     @Profile("!test")
     Server h2Server() throws SQLException {
         log.info("Start H2 TCP server");
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     }
+
     @Bean
     Module module() {
         return new Hibernate5Module();

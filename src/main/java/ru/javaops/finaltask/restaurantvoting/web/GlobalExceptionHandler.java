@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.javaops.finaltask.restaurantvoting.error.AppException;
-import ru.javaops.finaltask.restaurantvoting.util.valodation.ValidationUtil;
+import ru.javaops.finaltask.restaurantvoting.util.validation.ValidationUtil;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Map;
@@ -29,6 +29,8 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.M
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_LATE_VOTE = "You have already voted and you can't change your vote after 11:00";
+
 
     private final ErrorAttributes errorAttributes;
 
@@ -52,7 +54,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("ApplicationException: {}", ex.getMessage());
         return createResponseEntity(getDefaultBody(request, ex.getOptions(), null), ex.getStatus());
     }
-
 
 
     @ExceptionHandler(EntityNotFoundException.class)

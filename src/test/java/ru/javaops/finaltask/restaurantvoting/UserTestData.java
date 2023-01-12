@@ -23,15 +23,14 @@ public class UserTestData {
 
 
     public static User getNew() {
-        return new User( null,"New", "new@gmail.com", "newPass", Role.USER);
+        return new User(null, "New", "new@gmail.com", "newPass", Role.USER);
     }
 
     public static User getUpdated() {
-        User user=new User(FIRST_USER_ID, "UpdatedName", FIRST_USER_MAIL, "newPass", Role.USER);
+        User user = new User(FIRST_USER_ID, "UpdatedName", FIRST_USER_MAIL, "newPass", Role.USER);
         user.setRegistered(LocalDateTime.now());
         return user;
     }
-
 
 
     public static String jsonWithPassword(User user, String passw) {

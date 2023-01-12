@@ -5,8 +5,9 @@ import org.springframework.http.HttpStatus;
 
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
 
-public class IllegalRequestDataException extends AppException {
-    public IllegalRequestDataException(String msg) {
+public class VotingException extends AppException {
+
+    public VotingException(String msg) {
         super(HttpStatus.UNPROCESSABLE_ENTITY, msg, ErrorAttributeOptions.of(MESSAGE));
     }
 }

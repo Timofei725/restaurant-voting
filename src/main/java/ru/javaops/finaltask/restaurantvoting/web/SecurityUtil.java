@@ -3,7 +3,6 @@ package ru.javaops.finaltask.restaurantvoting.web;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.javaops.finaltask.restaurantvoting.model.User;
 
 import static java.util.Objects.requireNonNull;
 
@@ -22,9 +21,6 @@ public class SecurityUtil {
         return requireNonNull(safeGet(), "No authorized user found");
     }
 
-    public static User authUser() {
-        return get().getUser();
-    }
 
     public static int authId() {
         return get().getUser().id();

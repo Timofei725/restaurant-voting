@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.javaops.finaltask.restaurantvoting.util.valodation.NoHtml;
+import ru.javaops.finaltask.restaurantvoting.util.validation.NoHtml;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NamedEntity extends BaseEntity{
+public class NamedEntity extends BaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)

@@ -1,4 +1,4 @@
-package ru.javaops.finaltask.restaurantvoting.util.valodation;
+package ru.javaops.finaltask.restaurantvoting.util.validation;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.core.NestedExceptionUtils;
@@ -6,9 +6,13 @@ import org.springframework.lang.NonNull;
 import ru.javaops.finaltask.restaurantvoting.HasId;
 import ru.javaops.finaltask.restaurantvoting.error.IllegalRequestDataException;
 import ru.javaops.finaltask.restaurantvoting.error.NoExistentRestaurantException;
+import ru.javaops.finaltask.restaurantvoting.error.VotingException;
 import ru.javaops.finaltask.restaurantvoting.model.Restaurant;
+import ru.javaops.finaltask.restaurantvoting.model.Vote;
 
 import java.util.Optional;
+
+import static ru.javaops.finaltask.restaurantvoting.web.GlobalExceptionHandler.EXCEPTION_LATE_VOTE;
 
 
 @UtilityClass
@@ -43,9 +47,15 @@ public class ValidationUtil {
     }
 
 
-    public static void checkRestaurantId(Optional<Restaurant> restaurant,Integer id) {
+    public static void checkRestaurantId(Optional<Restaurant> restaurant, int id) {
         if (restaurant.isEmpty()) {
-            throw new NoExistentRestaurantException(String.format("Restaurant with id = %s doesn't exist",id));
+            throw new NoExistentRestaurantException(String.format("Restaurant with id = %s doesn't exist", id));
+        }
+    }
+
+    public static void checkVote(Optional<Vote> vote) {
+        if (vote.isEmpty()) {
+            throw new VotingException(String.format(EXCEPTION_LATE_VOTE));
         }
     }
 }
